@@ -1,17 +1,26 @@
 {
   "name": "kolint",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "homepage": "https://github.com/timplourde/kolint",
   "description": "Lint for application code which uses Knockout.js",
-  "main": "src/kolint.js",
+  "author" : "@timplourde",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/timplourde/kolint/kolint.git"
+  },
+  "bugs": {
+    "https://github.com/timplourde/kolint/issues"
+  },
   "bin": {
     "kolint": "src/cli.js"
   },
+  "preferGlobal": true,
+  "main": "src/kolint.js",
   "private": true,
   "scripts": {
     "test": "grunt"
   },
-  "author": "@timplourde",
-  "license": "MIT",
   "dependencies": {
     "esprima": "~1.0.4",
     "underscore": "~1.6.0",
