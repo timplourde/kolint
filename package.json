@@ -1,0 +1,30 @@
+{
+  "name": "kolint",
+  "version": "0.0.1",
+  "description": "Lint for application code which uses Knockout.js",
+  "main": "src/kolint.js",
+  "bin": {
+    "kolint": "src/cli.js"
+  },
+  "private": true,
+  "scripts": {
+    "test": "grunt"
+  },
+  "author": "@timplourde",
+  "license": "MIT",
+  "dependencies": {
+    "esprima": "~1.0.4",
+    "underscore": "~1.6.0",
+    "estraverse": "~1.5.0",
+    "glob": "~3.2.9",
+    "string": "~1.8.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.9.2",
+    "grunt-jasmine-node": "~0.2.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-execute": "~0.1.5"
+  }
+}
