@@ -12,7 +12,7 @@ var fs = require('fs'),
 var writeAst = function (fileName, code) {
     "use strict";
     var js, ast, outputFile;
-    console.log("writing " + fileName);
+
     ast = esprima.parse(code, {
         loc: true,
         comment: true

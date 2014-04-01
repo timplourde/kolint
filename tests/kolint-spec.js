@@ -66,7 +66,6 @@ describe("kolint", function () {
 
                     errors = sut.validateString(bigString);
                     expect(errors.length).toBe(11);
-                    console.log(errors);
                     done();
                 });
             });
