@@ -19,7 +19,6 @@
   },
   "preferGlobal": true,
   "main": "src/kolint.js",
-  "private": true,
   "scripts": {
     "test": "grunt"
   },
