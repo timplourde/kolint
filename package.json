@@ -4,14 +4,16 @@
   "homepage": "https://github.com/timplourde/kolint",
   "description": "Lint for application code which uses Knockout.js",
   "author" : "@timplourde",
+  "keywords": [
+    "knockout",
+    "lint"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url" : "https://github.com/timplourde/kolint/kolint.git"
   },
-  "bugs": {
-    "https://github.com/timplourde/kolint/issues"
-  },
+  "bugs": "https://github.com/timplourde/kolint/issues",
   "bin": {
     "kolint": "src/cli.js"
   },
