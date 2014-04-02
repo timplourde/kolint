@@ -217,4 +217,3 @@ pip-log.txt
 #Custom
 node_modules/
 .grunt/
-tests/samples/ast
