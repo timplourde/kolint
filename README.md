@@ -1,4 +1,5 @@
-﻿# kolint
+﻿kolint
+======
 
 It's like JSHint for Knockout apps!  It scans your JavaScript code and reports any issues it finds.  Ideally, this should be run on your ViewModels.
 
@@ -45,7 +46,7 @@ ko.applyBindings(viewModel, document.getElementById("myApp"));
 Never interact with the DOM directly except when in a [custom binding handler](http://knockoutjs.com/documentation/custom-bindings.html).  DOM manipulation inside a ViewModel breaks MVVM, degrades maintainability and complicates unit testing.
 
 ```javascript
-// BAD
+/* BAD */
 var vm = {
     doStuff: function() {
         $("myMessage").fadeIn();
@@ -58,12 +59,12 @@ var vm = {
 Never update the observable you're subscribed to.  This is typically done for input sanitization and results in the subsciption firing twice.  Use an [extender](http://knockoutjs.com/documentation/extenders.html) instead.  
 
 ```javascript
-// BAD
+/* BAD */
 var vm = {
     name: ko.observable()
 };
 vm.name.subscribe(function(newVal){
-    name(newVal.toUpperCase());
+    vm.name(newVal.toUpperCase());
 });
 ```
 
