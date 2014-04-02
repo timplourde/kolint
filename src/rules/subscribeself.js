@@ -20,6 +20,13 @@ function subscribeself (ast) {
     estraverse.traverse(ast, {
         enter: function (node, parent) {
             if (insideSubscription && node.type === AST.CALL_EXPRESSION) {
+
+                if (node.arguments.length === 0) {
+                    // e.g. vm.myObservable()
+                    // it's ok to _read_ the subscribed observable
+                    return estraverse.VisitorOption.Skip;
+                }
+
                 if (node.callee.type === AST.MEMBER_EXPRESSION &&
                     node.callee.property.name === targetObservableName) {
 

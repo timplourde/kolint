@@ -3,7 +3,8 @@
 };
 
 vm.observableThing.subscribe(function (newVal) {
-    console.log(newVal);
+    // it's ok to _read_ the same observable here, not sure why you'd want to do that...
+    var foo = vm.observableThing(); 
 });
 
 function ViewModelCtor() {
