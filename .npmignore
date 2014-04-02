@@ -1,0 +1,7 @@
+.git*
+.npmignore
+.jshintrc
+.kolint*
+Gruntfile.js
+tests
+util
