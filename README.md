@@ -112,7 +112,8 @@ var errors = kolint.validateString(str);
 // to validate a file...
 kolint.validateFile(path, callback); 
 
-// The callback is passed two arguments: `(error, lintErrors)`, where `lintErrors` is the array of lint errors
+// The callback is passed two arguments: `(error, lintErrors)`, 
+// where `lintErrors` is the array of lint errors
 ```
 
 ## Contributing
