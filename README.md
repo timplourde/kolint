@@ -13,15 +13,17 @@ Install `node` and `npm` and run this command ( omit the `-g` switch if you don'
 npm install -g kolint
 ```
 
-To run:
+To run, for example:
 
 ```
-kolint [file(s)] [--jsonReport=report.json]
+kolint myfile.js
 ```
 
 Arguments:
-1. (required) Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
-2. (optional) JSON report output file
+
+1. [files]: Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
+1. [options]: 
+    - JSON report output file, e.g. `--jsonOut=report.json`
 
 Note that only .js files will be processed when the CLI is run.
 
@@ -88,7 +90,7 @@ some/dir/*.js
 some/otherDir/**/*.js
 ```
 
-Note: entries in `.kolintignore` must align with the arguments you pass to the CLI.  For example, `.\folder\*` does not equal 'folder\*' 
+Note: entries in `.kolintignore` must align with the arguments you pass to the CLI.  For example, `.\folder\*` does not equal `folder\*` 
 
 ## API 
 
@@ -118,10 +120,10 @@ kolint.validateFile(path, callback);
 
 ## Contributing
 
-Run `npm install` to download the modules you need.
+`npm install` to download the modules you need.
 
-Run `grunt` to build, jshint and run tests.  See the `Gruntfile.js` for more info.
+`grunt` to build, jshint and run tests.  See the `Gruntfile.js` for more info.
 
-The `tests\samples` directory contains sample JS files.  The `make-ast-files` grunt task converts these into AST format and puts them in `tests\samples\ast` to simplify writing rules.
+The `tests\samples` directory contains sample JS files used in unit tests.  The `make-ast-files` grunt task converts these into AST format and puts them in `tests\samples\ast`.
 
 To run the CLI without linking: `node src/cli.js path/to/file.js`
