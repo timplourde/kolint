@@ -36,6 +36,18 @@ describe("kolint", function () {
         });
     }
 
+    it("throws when validating a string which is not JS", function (done) {
+        var sut = new KOLint(), errors;
+        readFile("notjs.html", function (str) {
+            try {
+                sut.validateString(str);
+            } catch (e) {
+                expect(e).toBe("Could not parse code into an AST, please make sure the code is JS and not HTML");
+            }
+            done();
+        });
+    });
+
     it("returns no errors when validating a string with clean code", function (done) {
         var sut = new KOLint(), errors;
         readFile("nodom-clean.js", function (str) {
@@ -52,7 +64,6 @@ describe("kolint", function () {
             expect(errors.length).toBe(8);
             done();
         });
-        done();
     });
 
     it("returns errors from multiple rules when validating a string with dirty code", function (done) {
@@ -70,16 +81,21 @@ describe("kolint", function () {
                 });
             });
         });
-        sut.validateFile(PATH_TO_SAMPLES + "/abspecific-dirty.js", function (errors) {
-            expect(errors.length).toBe(1);
+    });
+
+    it("returns no errors when validating a file which is not a JS file", function (done) {
+        var sut = new KOLint();
+        sut.validateFile(PATH_TO_SAMPLES + "/notjs.html", function (error, lintErrors) {
+            console.log(error);
+            expect(error).toEqual("Skipping file (not a .js file): tests/samples/notjs.html");
             done();
         });
     });
 
     it("returns no errors when validating a file with clean code", function (done) {
         var sut = new KOLint();
-        sut.validateFile(PATH_TO_SAMPLES + "/abspecific-clean.js", function (errors) {
-            expect(errors.length).toBe(0);
+        sut.validateFile(PATH_TO_SAMPLES + "/abspecific-clean.js", function (error, lintErrors) {
+            expect(lintErrors.length).toBe(0);
             done();
         });
         
@@ -87,10 +103,11 @@ describe("kolint", function () {
 
     it("returns errors when validating a file dirty code", function (done) {
         var sut = new KOLint();
-        sut.validateFile(PATH_TO_SAMPLES + "/abspecific-dirty.js", function (errors) {
-            expect(errors.length).toBe(1);
+        sut.validateFile(PATH_TO_SAMPLES + "/abspecific-dirty.js", function (error, lintErrors) {
+            expect(lintErrors.length).toBe(1);
             done();
         });
     });
+
 
 });

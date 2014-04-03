@@ -1,4 +1,1 @@
-tests/samples/**/*.ast.js
-/* comment */
-// comment
-Gruntfile.js
+tests/samples/ast/*

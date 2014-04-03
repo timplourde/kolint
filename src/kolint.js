@@ -39,8 +39,7 @@
                 comment: true
             });
         } catch (e) {
-            console.log("Could not parse code into an AST");
-            throw e;
+            throw "Could not parse code into an AST, please make sure the code is JS and not HTML";
         }
 
         _.chain(rules).keys().each(function (rule) {
@@ -62,12 +61,25 @@
     };
 
     KOLint.prototype.validateFile = function (file, callback) {
+        if (!callback) {
+            return;
+        }
+        if (!/.js$/.test(file)) {
+            callback("Skipping file (not a .js file): " + file);
+            return;
+        }
         fs.readFile(file, { encoding: 'utf-8' }, function (err, contents) {
-            var lintErrors;
-            if (!err && callback) {
-                lintErrors = this.validateString(contents);
-                callback(lintErrors);
+            var lintErrors = [];
+            if (err) {
+                callback(err);
             }
+            try {
+                lintErrors = this.validateString(contents);
+            } catch (e) {
+                callback(e);
+            }
+            callback(null, lintErrors);
+
         }.bind(this));
     };
 

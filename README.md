@@ -16,14 +16,14 @@ npm install -g kolint
 To run:
 
 ```
-kolint myfile.js
+kolint [file(s)] [--jsonReport=report.json]
 ```
 
-The only argument is in [glob](https://github.com/isaacs/node-glob) format.  For example, to run on all .js files recursively:
+Arguments:
+1. (required) Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
+2. (optional) JSON report output file
 
-```
-kolint some/folder/**/*.js
-```
+Note that only .js files will be processed when the CLI is run.
 
 ## Rules
 
@@ -88,7 +88,9 @@ some/dir/*.js
 some/otherDir/**/*.js
 ```
 
-## API
+Note: entries in `.kolintignore` must align with the arguments you pass to the CLI.  For example, `.\folder\*` does not equal 'folder\*' 
+
+## API 
 
 To use the API directly:
 
@@ -97,16 +99,28 @@ var KOLint = require("kolint");
 
 var kolint = new KOLint();
 
-// or, to override default settings
-var kolint = new KOLint({
-    "abspecific":       false,
-    "nodom":            true,
-    "subscribeself":    true
-});
+    // or, to override default settings
+    var kolint = new KOLint({
+        "abspecific":       false,
+        "nodom":            true,
+        "subscribeself":    true
+    });
 
-// to validate a string
-kolint.validateString(str); // returns an array or errors
+// to validate a string...
+var errors = kolint.validateString(str);
 
-// to validate a file
-kolint.validateFile(path, callback); // callback passed an array of errors
+// to validate a file...
+kolint.validateFile(path, callback); 
+
+// The callback is passed two arguments: `(error, lintErrors)`, where `lintErrors` is the array of lint errors
 ```
+
+## Contributing
+
+Run `npm install` to download the modules you need.
+
+Run `grunt` to build, jshint and run tests.  See the `Gruntfile.js` for more info.
+
+The `tests\samples` directory contains sample JS files.  The `make-ast-files` grunt task converts these into AST format and puts them in `tests\samples\ast` to simplify writing rules.
+
+To run the CLI without linking: `node src/cli.js path/to/file.js`
