@@ -21,11 +21,13 @@ Usage:
 
 Arguments:
 
-1. files: Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
+**files:** Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
 
-1. options (optional):
-    `--jsonOut=filename` : JSON report output file
-    `--debug` : output debug messages
+**options (optional)**
+
+`--jsonOut=filename` : JSON report output file
+
+`--debug` : output debug messages
 
 Note that only .js files will be processed when the CLI is run.
 
