@@ -11,7 +11,10 @@
         KOLint = require("./kolint"),
         com = require("./common").constants,
         target = null,
-        jsonOutputFile = null,
+        options = {
+            jsonReportFile : null,
+            debug: false
+        },
         numFiles = 0,
         fileCounter = 0,
         reports = [],
@@ -25,6 +28,12 @@
         IGNORE_FILE_NAME = ".kolintignore",
         kolint;
 
+    function debug(message){
+        if(options.debug){
+            console.log(message);
+        }
+    }
+
     // recursively search upwards to find a .kohintrc file and return its contents
     function getConfig(dir) {
         var file = path.normalize(path.join(dir, CONFIG_FILE_NAME)),
@@ -36,7 +45,7 @@
         }
 
         if(fs.existsSync(file)) {
-            console.log(com.outputPrefix + "using settings in "+file);
+            debug(com.outputPrefix + "using settings in "+file);
             return JSON.parse(fs.readFileSync(file, "utf8"));
         }
 
@@ -44,7 +53,7 @@
     }
 
     function processFile(file, callback) {
-        console.log(com.outputPrefix + "processing "+ file);
+        debug(com.outputPrefix + "processing "+ file);
         kolint.validateFile(file, function(error, lintErrors) {
             fileCounter += 1;
             if(error) {
@@ -77,14 +86,20 @@
                     console.log("> " + error.src);
                     console.log("");
                 });
-            }); 
-        } 
+            });
+        }
 
         console.log("");
         console.log(totalErrors + " errors");
 
-        if(jsonOutputFile){
-            fs.writeFileSync(jsonOutputFile, JSON.stringify({ kolintErrors : reports}, null, 2));
+        if(options.jsonReportFile){
+            try{
+                fs.writeFileSync(options.jsonReportFile, JSON.stringify({ kolintErrors : reports}, null, 2));
+            }catch(e){
+                console.log("Failed while trying to write the JSON report to: "+options.jsonReportFile);
+                throw e;
+            }
+            
         }
 
         if(reports.length){
@@ -127,12 +142,12 @@
                 // only interested in .js files
                 files = onlyJSFiles(files);
 
-                console.log(com.outputPrefix + "found " + files.length + " .js files");
+                debug(com.outputPrefix + "found " + files.length + " .js files");
                 
                 if(filesToIgnore.length){
-                    console.log(com.outputPrefix + "ignoring " + filesToIgnore.length + " .js files found in .kolintignore");
+                    debug(com.outputPrefix + "ignoring " + filesToIgnore.length + " .js files found in .kolintignore");
                     files = _.difference(files, filesToIgnore);
-                    console.log(com.outputPrefix + "processing filtered batch of " + files.length + " .js files");
+                    debug(com.outputPrefix + "processing filtered batch of " + files.length + " .js files");
                 }
 
                 numFiles = files.length;
@@ -144,23 +159,33 @@
        
     }
 
+    function setOptions(optionsArray) {
+        _.each(optionsArray, function(option){
+            var jsonReport;
+            if(/^--jsonOut=/.test(option)) {
+                jsonReport = option.split("=")[1];
+                if(jsonReport){
+                    options.jsonReportFile = jsonReport;
+                }
+            } else if(/^--debug/.test(option)){
+                options.debug = true;
+            }
+        });
+    }
+
     if (process.argv.length >= 3){
         target = process.argv[2];
-        if(process.argv.length > 3){
-            var jsonOutputFile = process.argv[3];
-            if(!/^--jsonOut=/.test(jsonOutputFile)){
-                console.log("expected '--jsonOut=path/to/file.json' but found '"+jsonOutputFile + "', not writing file");
-            }else{
-                jsonOutputFile = jsonOutputFile.split("=")[1];
-            }
+        if(process.argv.length > 3) {
+            setOptions(process.argv.slice(3));
         }
         run();
     } else {
         console.log("Usage : kolint <files> <options>");
-        console.log("Args:")
-        console.log("<files>    : file(s) in glob format e.g. some/dir/**/*.js")
+        console.log("Args:");
+        console.log("<files>    : file(s) in glob format e.g. some/dir/**/*.js");
         console.log("<options>  : optional");
-        console.log("   --jsonOut=filename : write report in json format");
+        console.log("   --jsonOut=filename : write report in json format to specified file name");
+        console.log("   --debug : output debug messages");
         process.exit(1);
     }
 

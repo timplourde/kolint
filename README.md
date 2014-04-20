@@ -9,21 +9,23 @@ This library contains a NPM module which includes a CLI.
 
 Install `node` and `npm` and run this command ( omit the `-g` switch if you don't want it to be registered globally):
 
-```
-npm install -g kolint
-```
+`npm install -g kolint`
 
 To run, for example:
 
-```
-kolint myfile.js
-```
+`kolint myfile.js`
+
+Usage:
+
+`kolint <files> <options>`
 
 Arguments:
 
-1. [files]: Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
-1. [options]: 
-    - JSON report output file, e.g. `--jsonOut=report.json`
+1. files: Path to file(s): in [glob](https://github.com/isaacs/node-glob) format, e.g. `some/folder/**/*.js`
+
+1. options (optional):
+    `--jsonOut=filename` : JSON report output file
+    `--debug` : output debug messages
 
 Note that only .js files will be processed when the CLI is run.
 
