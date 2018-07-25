@@ -1,6 +1,6 @@
 {
   "name": "kolint",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/timplourde/kolint",
   "description": "Lint for application code which uses Knockout.js",
   "author" : "@timplourde",
@@ -27,7 +27,7 @@
     "underscore": "~1.6.0",
     "estraverse": "~1.5.0",
     "glob": "~3.2.9",
-    "string": "~1.8.0"
+    "string": "3.3.3"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
